@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) {
-        //Storage.getInstance().seed();
+        Storage.getInstance().seed();
 
         Analyst analyst = new Analyst();
 
