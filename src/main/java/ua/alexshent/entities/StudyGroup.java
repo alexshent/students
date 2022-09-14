@@ -12,7 +12,7 @@ public class StudyGroup {
 
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "studyGroup")
     private List<Student> students;
 
     public StudyGroup() {

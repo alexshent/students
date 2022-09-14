@@ -108,12 +108,22 @@ public class Storage {
 
         // ------------------------------
 
+        StudyGroup studyGroup1 = new StudyGroup();
+        studyGroup1.setName("Group1");
+        groupDao.create(studyGroup1);
+
+        StudyGroup studyGroup2 = new StudyGroup();
+        studyGroup2.setName("Group2");
+        groupDao.create(studyGroup2);
+
         Student student1 = new Student();
         student1.setFirstName("FN1");
         student1.setLastName("LN1");
         student1.setBirthdate(LocalDate.now());
         student1.setEnrollmentDate(LocalDate.of(1999, 3, 11));
         student1.setGrades(gradeList1);
+        student1.setStudyGroup(studyGroup1);
+        studentDao.create(student1);
 
         Student student2 = new Student();
         student2.setFirstName("FN2");
@@ -121,25 +131,16 @@ public class Storage {
         student2.setBirthdate(LocalDate.now());
         student2.setEnrollmentDate(LocalDate.of(1999, 3, 11));
         student2.setGrades(gradeList2);
+        student2.setStudyGroup(studyGroup1);
+        studentDao.create(student2);
 
         Student student3 = new Student();
         student3.setFirstName("FN3");
         student3.setLastName("LN3");
         student3.setBirthdate(LocalDate.now());
         student3.setEnrollmentDate(LocalDate.of(1999, 3, 11));
-
-        List<Student> studentsList1 = new ArrayList<>();
-        studentsList1.add(student1);
-        studentsList1.add(student2);
-        studentsList1.add(student3);
-
-        StudyGroup studyGroup1 = new StudyGroup();
-        studyGroup1.setName("Group1");
-        studyGroup1.setStudents(studentsList1);
-
-        groupDao.create(studyGroup1);
-
-        // ------------------
+        student3.setStudyGroup(studyGroup1);
+        studentDao.create(student3);
 
         Student student4 = new Student();
         student4.setFirstName("FN4");
@@ -147,6 +148,8 @@ public class Storage {
         student4.setBirthdate(LocalDate.now());
         student4.setEnrollmentDate(LocalDate.of(1999, 3, 11));
         student4.setGrades(gradeList1);
+        student4.setStudyGroup(studyGroup2);
+        studentDao.create(student4);
 
         Student student5 = new Student();
         student5.setFirstName("FN5");
@@ -154,19 +157,10 @@ public class Storage {
         student5.setBirthdate(LocalDate.now());
         student5.setEnrollmentDate(LocalDate.of(1999, 3, 11));
         student5.setGrades(gradeList2);
-
-        List<Student> studentsList2 = new ArrayList<>();
-        studentsList2.add(student4);
-        studentsList2.add(student5);
-
-        StudyGroup studyGroup2 = new StudyGroup();
-        studyGroup2.setName("Group2");
-        studyGroup2.setStudents(studentsList2);
-
-        groupDao.create(studyGroup2);
+        student5.setStudyGroup(studyGroup2);
+        studentDao.create(student5);
 
         // --------------------------
-
 
     }
 }
