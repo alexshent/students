@@ -11,7 +11,7 @@ public class Grade {
     @GeneratedValue
     private UUID id;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "grades")
     private List<Student> students;
 
     @OneToOne
