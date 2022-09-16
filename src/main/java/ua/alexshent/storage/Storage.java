@@ -4,9 +4,10 @@ import ua.alexshent.entities.*;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Storage {
     private static Storage instance;
@@ -25,13 +26,8 @@ public class Storage {
     }
 
     private Storage() {
-        String persistenceUnit;
-        if (isDevelopment()) {
-            persistenceUnit = "pu-dev";
-        } else {
-            persistenceUnit = "pu-prod";
-        }
-        entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
+        final String persistenceUnit = "pu";
+        entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit, getProperties());
         studentDao = new EntityDao<>(entityManagerFactory, Student.class);
         groupDao = new EntityDao<>(entityManagerFactory, StudyGroup.class);
         subjectDao = new EntityDao<>(entityManagerFactory, Subject.class);
@@ -49,6 +45,28 @@ public class Storage {
             return true;
         }
         return false;
+    }
+
+    private Map<String, String> getProperties() {
+        Map<String, String> result = new HashMap<>();
+        try (InputStream inputStream = Storage.class.getClassLoader().getResourceAsStream("postgres.properties")) {
+            Properties properties = new Properties();
+            if (inputStream != null) {
+                properties.load(inputStream);
+                if (isDevelopment()) {
+                    result.put("javax.persistence.jdbc.url", properties.getProperty("url-dev"));
+                    result.put("javax.persistence.jdbc.user", properties.getProperty("user-dev"));
+                    result.put("javax.persistence.jdbc.password", properties.getProperty("password-dev"));
+                } else {
+                    result.put("javax.persistence.jdbc.url", properties.getProperty("url-prod"));
+                    result.put("javax.persistence.jdbc.user", properties.getProperty("user-prod"));
+                    result.put("javax.persistence.jdbc.password", properties.getProperty("password-prod"));
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     public void seed() {
