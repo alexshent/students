@@ -11,11 +11,11 @@ import java.util.List;
 public class Storage {
     private static Storage instance;
     private final EntityManagerFactory entityManagerFactory;
-    private final StudentDao studentDao;
-    private final GroupDao groupDao;
-    private final SubjectDao subjectDao;
-    private final EducatorDao educatorDao;
-    private final GradeDao gradeDao;
+    private final EntityDao<Student> studentDao;
+    private final EntityDao<StudyGroup> groupDao;
+    private final EntityDao<Subject> subjectDao;
+    private final EntityDao<Educator> educatorDao;
+    private final EntityDao<Grade> gradeDao;
 
     public static synchronized Storage getInstance() {
         if (instance == null) {
@@ -32,11 +32,11 @@ public class Storage {
             persistenceUnit = "pu-prod";
         }
         entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
-        studentDao = new StudentDao(entityManagerFactory);
-        groupDao = new GroupDao(entityManagerFactory);
-        subjectDao = new SubjectDao(entityManagerFactory);
-        educatorDao = new EducatorDao(entityManagerFactory);
-        gradeDao = new GradeDao(entityManagerFactory);
+        studentDao = new EntityDao<>(entityManagerFactory, Student.class);
+        groupDao = new EntityDao<>(entityManagerFactory, StudyGroup.class);
+        subjectDao = new EntityDao<>(entityManagerFactory, Subject.class);
+        educatorDao = new EntityDao<>(entityManagerFactory, Educator.class);
+        gradeDao = new EntityDao<>(entityManagerFactory, Grade.class);
     }
 
     public EntityManagerFactory getEntityManagerFactory() {
