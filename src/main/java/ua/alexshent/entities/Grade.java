@@ -2,6 +2,7 @@ package ua.alexshent.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -10,13 +11,10 @@ public class Grade {
     @Id
     @GeneratedValue
     private UUID id;
-
     @ManyToMany(mappedBy = "grades")
     private List<Student> students;
-
     @OneToOne
     private Subject subject;
-
     private int value;
 
     public Grade() {
@@ -52,5 +50,18 @@ public class Grade {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Grade grade = (Grade) object;
+        return Objects.equals(id, grade.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -10,10 +10,8 @@ import java.util.List;
 public class Student extends Person {
 
     private LocalDate enrollmentDate;
-
     @ManyToOne
     private StudyGroup studyGroup;
-
     @ManyToMany
     private List<Grade> grades;
 
